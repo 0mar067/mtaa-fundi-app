@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -10,9 +11,9 @@ def create_app():
     app = Flask(__name__)
     
     # Configuration
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///app.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SECRET_KEY'] = 'dev-secret-key'
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
     
     # Initialize extensions
     db.init_app(app)
@@ -25,5 +26,15 @@ def create_app():
     # Register blueprints
     from app.routes import api
     app.register_blueprint(api, url_prefix='/api')
+    
+    # Health check route
+    @app.route('/')
+    def health_check():
+        return {'message': 'Backend is running', 'status': 'ok'}, 200
+    
+    # Additional health check
+    @app.route('/health')
+    def health():
+        return {'status': 'healthy'}, 200
     
     return app

@@ -14,11 +14,23 @@ jobs_schema = JobSchema(many=True)
 application_schema = ApplicationSchema()
 applications_schema = ApplicationSchema(many=True)
 
+# Error handler
+@api.errorhandler(404)
+def not_found(error):
+    return jsonify({'error': 'Resource not found'}), 404
+
+@api.errorhandler(500)
+def internal_error(error):
+    return jsonify({'error': 'Internal server error'}), 500
+
 # User routes
 @api.route('/users', methods=['GET'])
 def get_users():
-    users = User.query.all()
-    return jsonify(users_schema.dump(users)), 200
+    try:
+        users = User.query.all()
+        return jsonify(users_schema.dump(users)), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @api.route('/users', methods=['POST'])
 def create_user():
@@ -30,11 +42,13 @@ def create_user():
         return jsonify(user_schema.dump(user)), 201
     except ValidationError as err:
         return jsonify({'errors': err.messages}), 400
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @api.route('/users/<int:user_id>', methods=['PATCH'])
 def update_user(user_id):
-    user = User.query.get_or_404(user_id)
     try:
+        user = User.query.get_or_404(user_id)
         data = user_schema.load(request.json, partial=True)
         for key, value in data.items():
             setattr(user, key, value)
@@ -42,19 +56,27 @@ def update_user(user_id):
         return jsonify(user_schema.dump(user)), 200
     except ValidationError as err:
         return jsonify({'errors': err.messages}), 400
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @api.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    user = User.query.get_or_404(user_id)
-    db.session.delete(user)
-    db.session.commit()
-    return '', 204
+    try:
+        user = User.query.get_or_404(user_id)
+        db.session.delete(user)
+        db.session.commit()
+        return '', 204
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Job routes
 @api.route('/jobs', methods=['GET'])
 def get_jobs():
-    jobs = Job.query.all()
-    return jsonify(jobs_schema.dump(jobs)), 200
+    try:
+        jobs = Job.query.all()
+        return jsonify(jobs_schema.dump(jobs)), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @api.route('/jobs', methods=['POST'])
 def create_job():
@@ -66,11 +88,13 @@ def create_job():
         return jsonify(job_schema.dump(job)), 201
     except ValidationError as err:
         return jsonify({'errors': err.messages}), 400
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @api.route('/jobs/<int:job_id>', methods=['PATCH'])
 def update_job(job_id):
-    job = Job.query.get_or_404(job_id)
     try:
+        job = Job.query.get_or_404(job_id)
         data = job_schema.load(request.json, partial=True)
         for key, value in data.items():
             setattr(job, key, value)
@@ -78,19 +102,27 @@ def update_job(job_id):
         return jsonify(job_schema.dump(job)), 200
     except ValidationError as err:
         return jsonify({'errors': err.messages}), 400
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @api.route('/jobs/<int:job_id>', methods=['DELETE'])
 def delete_job(job_id):
-    job = Job.query.get_or_404(job_id)
-    db.session.delete(job)
-    db.session.commit()
-    return '', 204
+    try:
+        job = Job.query.get_or_404(job_id)
+        db.session.delete(job)
+        db.session.commit()
+        return '', 204
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Application routes
 @api.route('/applications', methods=['GET'])
 def get_applications():
-    applications = Application.query.all()
-    return jsonify(applications_schema.dump(applications)), 200
+    try:
+        applications = Application.query.all()
+        return jsonify(applications_schema.dump(applications)), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @api.route('/applications', methods=['POST'])
 def create_application():
@@ -102,11 +134,13 @@ def create_application():
         return jsonify(application_schema.dump(application)), 201
     except ValidationError as err:
         return jsonify({'errors': err.messages}), 400
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @api.route('/applications/<int:app_id>', methods=['PATCH'])
 def update_application(app_id):
-    application = Application.query.get_or_404(app_id)
     try:
+        application = Application.query.get_or_404(app_id)
         data = application_schema.load(request.json, partial=True)
         for key, value in data.items():
             setattr(application, key, value)
@@ -114,10 +148,15 @@ def update_application(app_id):
         return jsonify(application_schema.dump(application)), 200
     except ValidationError as err:
         return jsonify({'errors': err.messages}), 400
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @api.route('/applications/<int:app_id>', methods=['DELETE'])
 def delete_application(app_id):
-    application = Application.query.get_or_404(app_id)
-    db.session.delete(application)
-    db.session.commit()
-    return '', 204
+    try:
+        application = Application.query.get_or_404(app_id)
+        db.session.delete(application)
+        db.session.commit()
+        return '', 204
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
