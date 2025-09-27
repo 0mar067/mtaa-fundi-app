@@ -2,6 +2,11 @@
 
 A modern full-stack web application built with React (frontend) and Flask (backend) for job management and applications in Kenya. Find your dream job with local companies and opportunities.
 
+## 🚀 Live Demo
+
+- **Frontend**: [https://mtaa-fundi-frontend.onrender.com](https://mtaa-fundi-frontend.onrender.com)
+- **Backend API**: [https://mtaa-fundi-backend.onrender.com](https://mtaa-fundi-backend.onrender.com)
+
 ## Features
 
 ### Backend (Flask)
@@ -156,3 +161,20 @@ The application includes Kenyan seed data:
 - Formik (forms)
 - Yup (validation)
 - Fetch API (HTTP requests)
+
+## 👥 Authors
+
+- **Elnabas Eugine** - Full-stack Developer
+- **Irene Muema** - Full-stack Developer
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
+
+## ⭐ Show your support
+
+Give a ⭐️ if this project helped you!
