@@ -18,7 +18,6 @@ def create_app():
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
-    CORS(app, origins=['*'])
     
     # Import models
     from app.models import User, Job, Application

@@ -6,6 +6,7 @@ from app.schemas import UserSchema, JobSchema, ApplicationSchema
 from marshmallow import ValidationError
 
 api = Blueprint('api', __name__)
+CORS(api, origins='*', methods=['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'], allow_headers=['Content-Type', 'Authorization'])
 
 # Schema instances
 user_schema = UserSchema()
