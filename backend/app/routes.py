@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from flask_cors import cross_origin
 from app import db
 from app.models import User, Job, Application
 from app.schemas import UserSchema, JobSchema, ApplicationSchema
@@ -25,6 +26,7 @@ def internal_error(error):
 
 # User routes
 @api.route('/users', methods=['GET'])
+@cross_origin()
 def get_users():
     try:
         users = User.query.all()
@@ -33,6 +35,7 @@ def get_users():
         return jsonify({'error': str(e)}), 500
 
 @api.route('/users', methods=['POST'])
+@cross_origin()
 def create_user():
     try:
         data = user_schema.load(request.json)
@@ -46,6 +49,7 @@ def create_user():
         return jsonify({'error': str(e)}), 500
 
 @api.route('/users/<int:user_id>', methods=['PATCH'])
+@cross_origin()
 def update_user(user_id):
     try:
         user = User.query.get_or_404(user_id)
@@ -60,6 +64,7 @@ def update_user(user_id):
         return jsonify({'error': str(e)}), 500
 
 @api.route('/users/<int:user_id>', methods=['DELETE'])
+@cross_origin()
 def delete_user(user_id):
     try:
         user = User.query.get_or_404(user_id)
