@@ -2,19 +2,29 @@ import { BASE_URL } from '../config';
 
 // Generic API function
 const apiCall = async (endpoint, options = {}) => {
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-    ...options,
-  });
-  
-  if (!response.ok) {
-    throw new Error(`API Error: ${response.status}`);
+  try {
+    console.log('Making API call to:', `${BASE_URL}${endpoint}`);
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      ...options,
+    });
+    
+    console.log('Response status:', response.status);
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('API Error:', response.status, errorText);
+      throw new Error(`API Error: ${response.status} - ${errorText}`);
+    }
+    
+    return response.status === 204 ? null : response.json();
+  } catch (error) {
+    console.error('Network error:', error);
+    throw error;
   }
-  
-  return response.status === 204 ? null : response.json();
 };
 
 // User API
