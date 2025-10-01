@@ -1,2 +1,2 @@
 // Base URL for API calls - uses environment variable or fallback
-export const BASE_URL = process.env.REACT_APP_API_URL || 'https://mtaa-backend.onrender.com/api';
+export const BASE_URL = process.env.REACT_APP_API_URL || 'https://mtaa-fundi-backend.onrender.com/api';
