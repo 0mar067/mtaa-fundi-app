@@ -23,6 +23,11 @@ def not_found(error):
 def internal_error(error):
     return jsonify({'error': 'Internal server error'}), 500
 
+# Test route
+@api.route('/ping', methods=['GET'])
+def ping():
+    return jsonify({'message': 'pong'}), 200
+
 # User routes
 @api.route('/users', methods=['GET'])
 def get_users():
