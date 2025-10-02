@@ -15,10 +15,17 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
     
+    # Enable CORS for API routes
+    CORS(app, resources={r"/api/*": {
+        "origins": [
+            "http://localhost:3000", 
+            "https://mtaa-fundi-frontend.onrender.com"
+        ]
+    }})
+    
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
-    CORS(app) # Initialize CORS
     
     # Import models
     from app.models import User, Job, Application
