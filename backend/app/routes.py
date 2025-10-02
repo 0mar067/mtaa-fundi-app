@@ -27,7 +27,6 @@ def internal_error(error):
 
 # User routes
 @api.route('/users', methods=['GET'])
-@cross_origin()
 def get_users():
     try:
         users = User.query.all()
@@ -35,16 +34,7 @@ def get_users():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@api.route('/users', methods=['OPTIONS'])
-def options_users():
-    return '', 200, {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-    }
-
 @api.route('/users', methods=['POST'])
-@cross_origin()
 def create_user():
     try:
         data = user_schema.load(request.json)
@@ -58,7 +48,6 @@ def create_user():
         return jsonify({'error': str(e)}), 500
 
 @api.route('/users/<int:user_id>', methods=['PATCH'])
-@cross_origin()
 def update_user(user_id):
     try:
         user = User.query.get_or_404(user_id)
@@ -73,7 +62,6 @@ def update_user(user_id):
         return jsonify({'error': str(e)}), 500
 
 @api.route('/users/<int:user_id>', methods=['DELETE'])
-@cross_origin()
 def delete_user(user_id):
     try:
         user = User.query.get_or_404(user_id)
@@ -85,7 +73,6 @@ def delete_user(user_id):
 
 # Job routes
 @api.route('/jobs', methods=['GET'])
-@cross_origin()
 def get_jobs():
     try:
         jobs = Job.query.all()
@@ -94,7 +81,6 @@ def get_jobs():
         return jsonify({'error': str(e)}), 500
 
 @api.route('/jobs', methods=['POST'])
-@cross_origin()
 def create_job():
     try:
         data = job_schema.load(request.json)
@@ -108,7 +94,6 @@ def create_job():
         return jsonify({'error': str(e)}), 500
 
 @api.route('/jobs/<int:job_id>', methods=['PATCH'])
-@cross_origin()
 def update_job(job_id):
     try:
         job = Job.query.get_or_404(job_id)
@@ -123,7 +108,6 @@ def update_job(job_id):
         return jsonify({'error': str(e)}), 500
 
 @api.route('/jobs/<int:job_id>', methods=['DELETE'])
-@cross_origin()
 def delete_job(job_id):
     try:
         job = Job.query.get_or_404(job_id)
@@ -135,7 +119,6 @@ def delete_job(job_id):
 
 # Application routes
 @api.route('/applications', methods=['GET'])
-@cross_origin()
 def get_applications():
     try:
         applications = Application.query.all()
@@ -144,7 +127,6 @@ def get_applications():
         return jsonify({'error': str(e)}), 500
 
 @api.route('/applications', methods=['POST'])
-@cross_origin()
 def create_application():
     try:
         data = application_schema.load(request.json)
@@ -158,7 +140,6 @@ def create_application():
         return jsonify({'error': str(e)}), 500
 
 @api.route('/applications/<int:app_id>', methods=['PATCH'])
-@cross_origin()
 def update_application(app_id):
     try:
         application = Application.query.get_or_404(app_id)
@@ -173,7 +154,6 @@ def update_application(app_id):
         return jsonify({'error': str(e)}), 500
 
 @api.route('/applications/<int:app_id>', methods=['DELETE'])
-@cross_origin()
 def delete_application(app_id):
     try:
         application = Application.query.get_or_404(app_id)
