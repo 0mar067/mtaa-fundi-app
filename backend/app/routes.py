@@ -35,6 +35,14 @@ def get_users():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@api.route('/users', methods=['OPTIONS'])
+def options_users():
+    return '', 200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+    }
+
 @api.route('/users', methods=['POST'])
 @cross_origin()
 def create_user():
