@@ -15,13 +15,8 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
     
-    # Enable CORS for API routes
-    CORS(app, resources={r"/api/*": {
-        "origins": [
-            "http://localhost:3000", 
-            "https://mtaa-fundi-frontend.onrender.com"
-        ]
-    }})
+    # Enable CORS for all routes
+    CORS(app, origins="*", allow_headers=["Content-Type", "Authorization"], methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"])
     
     # Initialize extensions
     db.init_app(app)
