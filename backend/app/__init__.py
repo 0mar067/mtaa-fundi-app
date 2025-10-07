@@ -17,7 +17,11 @@ def create_app():
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
     
     # Enable CORS for all routes
-    CORS(app, origins="*", allow_headers=["Content-Type", "Authorization"], methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], supports_credentials=True)
+    CORS(app, 
+         origins=["*"], 
+         allow_headers=["Content-Type", "Authorization"], 
+         methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], 
+         supports_credentials=True)
     
     # Initialize extensions
     db.init_app(app)
