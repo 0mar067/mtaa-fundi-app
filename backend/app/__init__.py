@@ -11,7 +11,8 @@ def create_app():
     app = Flask(__name__)
     
     # Configuration - Use persistent SQLite database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/app.db'
+    database_path = os.path.join(os.getcwd(), 'app.db')
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{database_path}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
     
