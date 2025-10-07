@@ -40,14 +40,20 @@ def get_users():
 @api.route('/users', methods=['POST'])
 def create_user():
     try:
+        print(f"Received user data: {request.json}")
         data = user_schema.load(request.json)
+        print(f"Validated data: {data}")
         user = User(**data)
         db.session.add(user)
         db.session.commit()
+        print(f"User created with ID: {user.id}")
         return jsonify(user_schema.dump(user)), 201
     except ValidationError as err:
+        print(f"Validation error: {err.messages}")
         return jsonify({'errors': err.messages}), 400
     except Exception as e:
+        print(f"Database error: {str(e)}")
+        db.session.rollback()
         return jsonify({'error': str(e)}), 500
 
 @api.route('/users/<int:user_id>', methods=['PATCH'])

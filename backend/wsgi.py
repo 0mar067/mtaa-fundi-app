@@ -6,10 +6,15 @@ app = create_app()
 
 # Create tables and seed data
 with app.app_context():
-    db.create_all()
-    
-    # Check if data already exists
-    if User.query.count() == 0:
+    try:
+        db.create_all()
+        print("Database tables created successfully")
+        
+        # Check if data already exists
+        user_count = User.query.count()
+        print(f"Current user count: {user_count}")
+        
+        if user_count == 0:
         # Seed users
         user1 = User(name="Wanjiku Mwangi", email="wanjiku@gmail.com", phone="0712345678")
         user2 = User(name="Brian Kiprotich", email="brian.kiprotich@yahoo.com", phone="0723456789")
@@ -31,6 +36,9 @@ with app.app_context():
         
         db.session.add_all([app1, app2])
         db.session.commit()
+        print("Seed data added successfully")
+    except Exception as e:
+        print(f"Database initialization error: {e}")
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
