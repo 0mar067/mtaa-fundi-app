@@ -10,13 +10,13 @@ migrate = Migrate()
 def create_app():
     app = Flask(__name__)
     
-    # Configuration - Use SQLite for simplicity
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+    # Configuration - Use persistent SQLite database
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/app.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
     
     # Enable CORS for all routes
-    CORS(app, origins="*", allow_headers=["Content-Type", "Authorization"], methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"])
+    CORS(app, origins="*", allow_headers=["Content-Type", "Authorization"], methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], supports_credentials=True)
     
     # Initialize extensions
     db.init_app(app)

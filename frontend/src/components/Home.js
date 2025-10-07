@@ -7,7 +7,7 @@ import { userAPI } from '../services/api';
 const userSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Name must be at least 2 characters').required('Name is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
-  phone: Yup.string().matches(/^07\d{8}$|^\+2547\d{8}$/, 'Enter valid Kenyan phone number (07XXXXXXXX)').required('Phone is required'),
+  phone: Yup.string().min(10, 'Phone must be at least 10 digits').required('Phone is required'),
 });
 
 const Home = () => {

@@ -4,7 +4,7 @@ class UserSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True, validate=validate.Length(min=2, max=100))
     email = fields.Email(required=True)
-    phone = fields.Str(required=True, validate=validate.Regexp(r'^07\d{8}$|^\+2547\d{8}$', error='Enter valid Kenyan phone number (07XXXXXXXX)'))
+    phone = fields.Str(required=True, validate=validate.Length(min=10, max=15))
     created_at = fields.DateTime(dump_only=True)
 
 class JobSchema(Schema):
