@@ -30,13 +30,19 @@ const Home = () => {
     }
   };
 
-  const handleCreateUser = async (values, { resetForm }) => {
+  const handleCreateUser = async (values, { resetForm, setFieldError }) => {
     try {
       await userAPI.create(values);
       resetForm();
       fetchUsers(); // Refresh list after creation
+      alert('User registered successfully!');
     } catch (error) {
       console.error('Error creating user:', error);
+      if (error.message.includes('UNIQUE constraint failed: users.email')) {
+        setFieldError('email', 'This email is already registered');
+      } else {
+        alert('Error creating user: ' + error.message);
+      }
     }
   };
 
