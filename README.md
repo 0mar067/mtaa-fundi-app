@@ -4,7 +4,7 @@ A modern full-stack web application built with React (frontend) and Flask (backe
 
 ## 🚀 Live Demo
 
-- **Frontend**: [https://mtaa-fundi-frontend.onrender.com](https://mtaa-fundi-frontend.onrender.com)
+- **Frontend**: [https://mtaa-fundi-app-1.onrender.com](https://mtaa-fundi-app-1.onrender.com)
 - **Backend API**: [https://mtaa-fundi-backend.onrender.com](https://mtaa-fundi-backend.onrender.com)
 
 ## Features
